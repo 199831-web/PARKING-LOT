@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Registrar Salida</title>
+  <link rel="stylesheet" href="Style.css">
+</head>
+<body>
+  <main>
+    <h2>Registrar Salida de Vehículo</h2>
+    <form id="formSalida">
+      <label for="placa">Placa del Vehículo:</label>
+      <input type="text" id="placa" name="placa" required><br><br>
+
+      <label for="puerta">Puerta de Salida:</label>
+      <input type="text" id="puerta" name="puerta" required><br><br>
+
+      <button type="submit">Registrar Salida</button>
+    </form>
+  </main>
+
+  <script>
+    document.getElementById('formSalida').addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      const placa = document.getElementById('placa').value.trim().toUpperCase();
+      const puerta = document.getElementById('puerta').value.trim();
+
+      try {
+        const res = await fetch('/api/salidas', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ placa, puerta })
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+          alert('✅ Salida registrada correctamente');
+          document.getElementById('formSalida').reset();
+        } else {
+          alert('❌ Error: ' + data.error);
+        }
+      } catch (err) {
+        alert('❌ Error en la solicitud: ' + err.message);
+      }
+    });
+  </script>
+</body>
+</html>

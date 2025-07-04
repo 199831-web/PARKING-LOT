@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Visualizar Celdas</title>
+  <link rel="stylesheet" href="Style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <header>
+    <div class="header-left">
+      <img src="img/descarga.png" alt="Logo" />
+      <h1>Parking Lot Admin</h1>
+    </div>
+  </header>
+
+  <div class="main-container">
+    <main>
+      <section class="formulario-centro">
+        <h2>Visualización de Celdas</h2>
+
+        <div style="display: flex; gap: 40px; justify-content: center; flex-wrap: wrap; align-items: flex-start;">
+          <!-- Gráfico de disponibilidad -->
+          <div>
+            <canvas id="graficoDisponibilidad" width="300" height="300"></canvas>
+          </div>
+
+          <!-- Gráficos secundarios -->
+          <div style="display: flex; flex-direction: column; gap: 30px;">
+            <canvas id="graficoOcupacionHoraria" width="300" height="200"></canvas>
+            <canvas id="graficoTiposVehiculos" width="300" height="200"></canvas>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

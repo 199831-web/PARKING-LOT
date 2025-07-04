@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard de Incidencias</title>
+  <link rel="stylesheet" href="Style.css">
+</head>
+<body>
+  <main>
+    <section class="form-crear-celda">
+      <h2>Filtrar Reportes de Incidencia</h2>
+      <form id="filtroForm">
+        <label for="filtroCelda">Celda:</label>
+        <input type="text" id="filtroCelda" placeholder="Ej: C5">
+
+        <label for="filtroUsuario">ID Usuario:</label>
+        <input type="number" id="filtroUsuario" placeholder="Ej: 123">
+
+        <button type="submit">Buscar</button>
+        <button type="button" onclick="cargarTodos()">Mostrar Todo</button>
+      </form>
+    </section>
+
+    <section>
+      <h2>Resultados</h2>
+      <table id="tablaDashboard">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Tipo Incidencia</th>
+            <th>Celda</th>
+            <th>Usuario</th>
+            <th>Descripción</th>
+            <th>Fecha</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+  </main>
+
+  <script>
+    async function cargarTodos() {
+      const res = await fetch('/api/reportes-incidencia');
+      const datos = await res.json();
+      mostrarTabla(datos);
+    }
+
+    function mostrarTabla(data) {
+      const tbody = document.querySelector('#tablaDashboard tbody');
+      tbody.innerHTML = '';
+
+      data.forEach(r => {
+        const fila = document.createElement('tr');
+        fila.innerHTML = `
+          <td>${r.id}</td>
+          <td>${r.incidencia}</td>
+          <td>C${r.celda_id}</td>
+          <td>${r.usuario || '-'}</td>
+          <td>${r.descripcion}</td>
+          <td>${r.fecha_hora}</td>
+        `;
+        tbody.appendChild(fila);
+      });
+    }
+
+    document.getElementById('filtroForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const celda = document.getElementById('filtroCelda').value.trim().replace('C', '');
+      const usuario = document.getElementById('filtroUsuario').value.trim();
+
+      const res = await fetch('/api/reportes-incidencia');
+      const data = await res.json();
+
+      const filtrados = data.filter(r => {
+        return (!celda || `${r.celda_id}` === celda) &&
+               (!usuario || `${r.usuario}` === usuario);
+      });
+
+      mostrarTabla(filtrados);
+    });
+
+    cargarTodos();
+  </script>
+</body>
+</html>

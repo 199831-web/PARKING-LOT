@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Actualizar Estado de Usuario</title>
+  <link rel="stylesheet" href="Style.css" />
+</head>
+<body>
+  <header>
+    <div class="header-left">
+      <img src="logo.png" alt="Logo" />
+      <h1>Parking Lot Admin</h1>
+    </div>
+    <nav class="header-nav">
+      <ul>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="CrearNuevoUsuario.html">Registrar Usuario</a></li>
+        <li><a href="ActualizarEstadoUsuario.html" class="active">Actualizar Usuario</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="main-container">
+    <aside class="sidebar">
+      <div class="profile-picture-container">
+        <img src="usuario.png" alt="Usuario" />
+      </div>
+      <div class="info-personal-sidebar">
+        <p>Bienvenido</p>
+        <p>Administrador</p>
+      </div>
+    </aside>
+
+    <main>
+      <section class="formulario-centro">
+        <h2>Actualizar Estado de Usuario</h2>
+
+        <div class="tabs">
+          <div class="tab active" data-tab="view-personas">Ver Usuarios</div>
+          <div class="tab" data-tab="edit-persona">Editar Usuario</div>
+        </div>
+
+        <div id="view-personas" class="tab-content active">
+          <div class="tabla-contenedor">
+            <button class="btn btn-crear" onclick="window.location.href='CrearNuevoUsuario.html'">+ Agregar Usuario</button>
+
+            <table class="styled-table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Nombre</th>
+                  <th>Estado</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="personas-list"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div id="edit-persona" class="tab-content">
+          <div class="form-group">
+            <label for="persona-select">Seleccionar Usuario:</label>
+            <select id="persona-select">
+              <option value="">Seleccione un usuario...</option>
+            </select>
+          </div>
+          <form id="edit-persona-form">
+            <div class="form-group">
+              <label for="edit-codigo">ID:</label>
+              <input type="text" id="edit-codigo" readonly />
+            </div>
+            <div class="form-group">
+              <label for="edit-nombre">Nombre:</label>
+              <input type="text" id="edit-nombre" required />
+            </div>
+            <div class="form-group">
+              <label for="edit-cargo">Estado:</label>
+              <input type="text" id="edit-cargo" required />
+            </div>
+            <div class="action-buttons">
+              <button type="submit" id="update-persona">Actualizar</button>
+              <button type="button" id="delete-persona">Eliminar</button>
+            </div>
+          </form>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="control.js"></script>
+</body>
+</html>

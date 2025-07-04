@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administrador - Parking Lot</title>
+    <link rel="stylesheet" href="Style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js" defer></script>
+    <style>
+        #graficoDisponibilidad {
+            max-width: 350px;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-left">
+            <img src="img/descarga.png" width="50px" alt="Logo SENA">
+        </div>
+        <nav class="header-nav">
+            <ul>
+                <li>
+                    <a href="#">Gestión de Usuarios</a>
+                    <ul class="submenu">
+                        <li><a href="CrearNuevoUsuario.html">Crear Nuevo Usuario</a></li>
+                        <li><a href="ActualizarEstadoUsuario.html">Actualizar Estado de Usuario</a></li>
+                        <li><a href="ActualizarDatosUsuario.html">Actualizar Datos de Usuario</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">Gestión de Vehículos</a>
+                    <ul class="submenu">
+                        <li><a href="crearVehiculo.html">Registrar Vehículo</a></li>
+                        <li><a href="ActualizarVehiculo.html">Actualizar Vehículo</a></li>
+                        <li><a href="ReasignarVehiculo.html">Reasignar Vehículo a Otro Usuario</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">Pico y Placa</a>
+                    <ul class="submenu">
+                        <li><a href="RestriccionesPicoPlaca.html">Configurar Pico y Placa</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">Accesos</a>
+                    <ul class="submenu">
+                        <li><a href="RegistrarEntrada.html">Registrar Entrada</a></li>
+                        <li><a href="RegistrarSalida.html">Registrar Salida</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">Celdas</a>
+                    <ul class="submenu">
+                        <li><a href="VisualizarCeldas.html">Ver Celdas por Área o Piso</a></li>
+                        <li><a href="ActualizarCelda.html">Actualizar Estado de Celda</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">Incidencias</a>
+                    <ul class="submenu">
+                        <li><a href="RegistrarIncidencia.html">Registrar Incidencia</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">Reportes y Consultas</a>
+                    <ul class="submenu">
+                        <li class="report-item"><strong>REP:</strong> Listado de todos los usuarios<div class="report-actions"><button onclick="generarReporte('usuarios')">Generar Reporte</button></div></li>
+                        <li class="report-item"><strong>REP:</strong> Vehículos con su propietario<div class="report-actions"><button onclick="generarReporte('vehiculos')">Generar Reporte</button></div></li>
+                        <li class="report-item"><strong>REP:</strong> Entradas registradas<div class="report-actions"><button onclick="generarReporte('entradas')">Generar Reporte</button></div></li>
+                        <li class="report-item"><strong>REP:</strong> Salidas registradas<div class="report-actions"><button onclick="generarReporte('salidas')">Generar Reporte</button></div></li>
+                        <li class="report-item"><strong>REP:</strong> Incidencias dentro del parqueadero<div class="report-actions"><button onclick="generarReporte('incidencias')">Generar Reporte</button></div></li>
+                        <li class="report-item"><strong>REP:</strong> Vehículos con restricción por pico y placa<div class="report-actions"><button onclick="generarReporte('pico_placa')">Generar Reporte</button></div></li>
+                        <li class="report-item"><strong>REP:</strong> Celdas ocupadas por día<div class="report-actions"><button onclick="generarReporte('celdas_ocupadas')">Generar Reporte</button></div></li>
+                        <li class="report-item"><strong>REP:</strong> Celdas más usadas<div class="report-actions"><button onclick="generarReporte('celdas_mas_usadas')">Generar Reporte</button></div></li>
+                        <li class="report-item"><strong>REP:</strong> Vehículos que más usan el parqueadero<div class="report-actions"><button onclick="generarReporte('vehiculos_frecuentes')">Generar Reporte</button></div></li>
+                        <li class="report-item"><strong>REP:</strong> Horas y días de máxima ocupación<div class="report-actions"><button onclick="generarReporte('ocupacion_maxima')">Generar Reporte</button></div></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="main-container">
+        <aside class="sidebar">
+            <div class="profile-picture-container">
+                <img src="img/Profile usuario.png" alt="Foto de Perfil Administrador">
+            </div>
+            <div class="info-personal-sidebar">
+                <p>Nombre: [Nombre del Administrador]</p>
+                <p>Tipo de Usuario: Administrador</p>
+                <p>Código Único: [Código Único]</p>
+            </div>
+            <nav class="sidebar-menu">
+                <ul></ul>
+            </nav>
+        </aside>
+
+        <main>
+            <section id="bienvenida">
+                <h2>Bienvenido al Panel de Administrador</h2>
+                <p>Usa la barra de navegación superior para acceder a las diferentes funcionalidades del sistema.</p>
+                <div style="margin-top: 15px;">
+                    <a href="CrearNuevoUsuario.html" class="boton-acceso">➕ Crear Nuevo Usuario</a>
+                </div>
+            </section>
+
+            <section id="estado-parqueadero">
+                <h2>Estado de Disponibilidad</h2>
+                <canvas id="graficoDisponibilidad" width="350" height="200"></canvas>
+            </section>
+
+            <section id="tabla-ingresos">
+                <h2>Vehículos Estacionados</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Placa</th>
+                            <th>Celda</th>
+                            <th>Hora de Ingreso</th>
+                            <th>Tiempo de Estancia</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaVehiculos">
+                        
+                    </tbody>
+                </table>
+            </section>
+        </main>
+    </div>
+</body>
+</html>

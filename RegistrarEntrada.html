@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Registrar Entrada</title>
+  <link rel="stylesheet" href="Style.css">
+</head>
+<body>
+  <main>
+    <h2>Registrar Entrada de Vehículo</h2>
+    <form id="formEntrada">
+      <label for="placa">Placa del Vehículo:</label>
+      <input type="text" id="placa" name="placa" required><br><br>
+
+      <label for="celda">Celda Asignada:</label>
+      <input type="text" id="celda" name="celda" required><br><br>
+
+      <button type="submit">Registrar Entrada</button>
+    </form>
+  </main>
+
+  <script>
+    document.getElementById('formEntrada').addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      const placa = document.getElementById('placa').value.trim().toUpperCase();
+      const celda = document.getElementById('celda').value.trim().toUpperCase();
+
+      try {
+        const res = await fetch('/api/entradas', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ placa, celda })
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+          alert('✅ Entrada registrada correctamente');
+          document.getElementById('formEntrada').reset();
+        } else {
+          alert('❌ Error: ' + data.error);
+        }
+      } catch (err) {
+        alert('❌ Error en la solicitud: ' + err.message);
+      }
+    });
+  </script>
+</body>
+</html>

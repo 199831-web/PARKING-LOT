@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Crear Nuevo Usuario</title>
+  <link rel="stylesheet" href="Style.css" />
+</head>
+<body>
+  <header>
+    <div class="header-left">
+      <img src="img/descarga.png" alt="Logo SENA" width="50px" />
+    </div>
+    <nav class="header-nav">
+      <ul>
+        <li><a href="#">Gestión de Usuarios</a></li>
+        <li><a href="#">Reportes y Consultas</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="main-container">
+    <aside class="sidebar">
+      <div class="profile-picture-container">
+        <img src="img/Profile usuario.png" alt="Avatar" />
+      </div>
+      <div class="info-personal-sidebar">
+        <p>Nombre: [Nombre del Administrador]</p>
+        <p>Tipo de Usuario: Administrador</p>
+        <p>Código Único: [Código Único]</p>
+      </div>
+    </aside>
+
+    <main class="centrado-vertical">
+      <form id="formularioRegistro" class="formulario-centro">
+        <h2>Registro de Usuario</h2>
+
+        <label for="tipoDocumento">Tipo de Documento:</label>
+        <select id="tipoDocumento" name="tipoDocumento" required>
+          <option value="CC">Cédula de Ciudadanía</option>
+          <option value="TI">Tarjeta de Identidad</option>
+        </select>
+
+        <label for="documento">Número de Documento:</label>
+        <input type="text" id="documento" name="documento" required>
+
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" required>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="celular">Celular:</label>
+        <input type="text" id="celular" name="celular" required>
+
+        <label for="clave">Contraseña:</label>
+        <input type="password" id="clave" name="clave" required>
+
+        <label for="tipoUsuario">Tipo de Usuario:</label>
+        <select id="tipoUsuario" name="tipoUsuario" required>
+          <option value="admin">Administrador</option>
+          <option value="usuario">Usuario</option>
+          <option value="operador">Operador</option>
+        </select>
+
+        <fieldset>
+          <legend>Información del Vehículo (opcional)</legend>
+
+          <label for="placa">Placa:</label>
+          <input type="text" id="placa" name="placa">
+
+          <label for="marca">Marca:</label>
+          <input type="text" id="marca" name="marca">
+
+          <label for="modelo">Modelo:</label>
+          <input type="text" id="modelo" name="modelo">
+
+          <label for="color">Color:</label>
+          <input type="text" id="color" name="color">
+
+          <label for="tipo">Tipo:</label>
+          <input type="text" id="tipo" name="tipo">
+        </fieldset>
+
+        <button type="submit">Registrar</button>
+      </form>
+    </main>
+  </div>
+
+  <script>
+    document.getElementById("formularioRegistro").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const form = this;
+      const formData = new FormData(form);
+
+      fetch("/api/registro-completo", {
+        method: "POST",
+        body: formData
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data?.mensaje) {
+            alert(data.mensaje);
+            form.reset();
+          } else {
+            alert("⚠️ La respuesta del servidor no tiene un mensaje válido.");
+          }
+        })
+        .catch(error => {
+          console.error("❌ Error:", error);
+          alert("Hubo un error al registrar los datos.");
+        });
+    });
+  </script>
+</body>
+</html>

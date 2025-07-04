@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Configurar Pico y Placa</title>
+  <link rel="stylesheet" href="Style.css">
+  <style>
+    main {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: calc(100vh - 60px); /* resta el header */
+      background-color: #f9f9f9;
+      padding-left: 250px; /* ancho del sidebar */
+    }
+
+    .formulario-container {
+      background-color: #fdf6f0;
+      border: 4px solid #4B0000;
+      border-radius: 10px;
+      padding: 30px;
+      max-width: 450px;
+      width: 90%;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .formulario-container h2 {
+      text-align: center;
+      color: #800000;
+    }
+
+    .formulario-container form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .formulario-container select,
+    .formulario-container input {
+      padding: 8px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    .formulario-container button {
+      padding: 10px;
+      background-color: #800000;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .formulario-container button:hover {
+      background-color: #A00000;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-left">
+      <img src="img/descarga.png" width="50px" alt="Logo SENA">
+    </div>
+    <nav class="header-nav">
+      <ul>
+        <li>
+          <a href="#">Gestión de Usuarios</a>
+          <ul class="submenu">
+            <li><a href="CrearNuevoUsuario.html">Crear Nuevo Usuario</a></li>
+            <li><a href="ActualizarEstadoUsuario.html">Actualizar Estado de Usuario</a></li>
+            <li><a href="ActualizarDatosUsuario.html">Actualizar Datos de Usuario</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="#">Gestión de Vehículos</a>
+          <ul class="submenu">
+            <li><a href="crearVehiculo.html">Registrar Vehículo</a></li>
+            <li><a href="ActualizarVehiculo.html">Actualizar Vehículo</a></li>
+            <li><a href="ReasignarVehiculo.html">Reasignar Vehículo a Otro Usuario</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="#">Pico y Placa</a>
+          <ul class="submenu">
+            <li><a href="RestriccionesPicoPlaca.html">Configurar Pico y Placa</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="#">Accesos</a>
+          <ul class="submenu">
+            <li><a href="RegistrarEntrada.html">Registrar Entrada</a></li>
+            <li><a href="RegistrarSalida.html">Registrar Salida</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="#">Celdas</a>
+          <ul class="submenu">
+            <li><a href="VisualizarCeldas.html">Ver Celdas por Área o Piso</a></li>
+            <li><a href="ActualizarCelda.html">Actualizar Estado de Celda</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="#">Incidencias</a>
+          <ul class="submenu">
+            <li><a href="RegistrarIncidencia.html">Registrar Incidencia</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="#">Reportes y Consultas</a>
+          <ul class="submenu">
+            <li class="report-item"><strong>REP:</strong> Listado de todos los usuarios<div class="report-actions"><button onclick="generarReporte('usuarios')">Generar Reporte</button></div></li>
+            <li class="report-item"><strong>REP:</strong> Vehículos con su propietario<div class="report-actions"><button onclick="generarReporte('vehiculos')">Generar Reporte</button></div></li>
+            <li class="report-item"><strong>REP:</strong> Entradas registradas<div class="report-actions"><button onclick="generarReporte('entradas')">Generar Reporte</button></div></li>
+            <li class="report-item"><strong>REP:</strong> Salidas registradas<div class="report-actions"><button onclick="generarReporte('salidas')">Generar Reporte</button></div></li>
+            <li class="report-item"><strong>REP:</strong> Incidencias dentro del parqueadero<div class="report-actions"><button onclick="generarReporte('incidencias')">Generar Reporte</button></div></li>
+            <li class="report-item"><strong>REP:</strong> Vehículos con restricción por pico y placa<div class="report-actions"><button onclick="generarReporte('pico_placa')">Generar Reporte</button></div></li>
+            <li class="report-item"><strong>REP:</strong> Celdas ocupadas por día<div class="report-actions"><button onclick="generarReporte('celdas_ocupadas')">Generar Reporte</button></div></li>
+            <li class="report-item"><strong>REP:</strong> Celdas más usadas<div class="report-actions"><button onclick="generarReporte('celdas_mas_usadas')">Generar Reporte</button></div></li>
+            <li class="report-item"><strong>REP:</strong> Vehículos que más usan el parqueadero<div class="report-actions"><button onclick="generarReporte('vehiculos_frecuentes')">Generar Reporte</button></div></li>
+            <li class="report-item"><strong>REP:</strong> Horas y días de máxima ocupación<div class="report-actions"><button onclick="generarReporte('ocupacion_maxima')">Generar Reporte</button></div></li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="main-container">
+    <aside class="sidebar">
+      <div class="profile-picture-container">
+        <img src="img/user-default.png" alt="Foto de perfil">
+      </div>
+      <div class="info-personal-sidebar">
+        <p><strong>Administrador</strong></p>
+        <p>admin@sena.edu.co</p>
+      </div>
+      <nav class="sidebar-menu">
+        <ul>
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="CrearNuevoUsuario.html">Crear Usuario</a></li>
+          <li><a href="crearVehiculo.html">Registrar Vehículo</a></li>
+          <li><a href="RegistrarEntrada.html">Registrar Entrada</a></li>
+          <li><a href="RegistrarSalida.html">Registrar Salida</a></li>
+          <li><a href="VisualizarCeldas.html">Celdas</a></li>
+          <li><a href="RegistrarIncidencia.html">Registrar Incidencia</a></li>
+          <li><a href="RestriccionesPicoPlaca.html" style="background-color: #800000;">Pico y Placa</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <main>
+      <section class="formulario-container">
+        <h2>Agregar Restricción Pico y Placa</h2>
+        <form id="formRestriccion">
+          <label for="dia">Día de la Semana:</label>
+          <select id="dia" name="dia" required>
+            <option value="Lunes">Lunes</option>
+            <option value="Martes">Martes</option>
+            <option value="Miércoles">Miércoles</option>
+            <option value="Jueves">Jueves</option>
+            <option value="Viernes">Viernes</option>
+            <option value="Sábado">Sábado</option>
+            <option value="Domingo">Domingo</option>
+          </select>
+
+          <label for="placa">Placa Restringida:</label>
+          <input type="text" id="placa" name="placa" maxlength="6" required>
+
+          <button type="submit">Guardar Restricción</button>
+        </form>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    document.getElementById('formRestriccion').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const dia = document.getElementById('dia').value;
+      const placa = document.getElementById('placa').value.toUpperCase();
+
+      try {
+        const res = await fetch('/api/restricciones', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ dia, placa })
+        });
+
+        const data = await res.json();
+        if (res.ok) {
+          alert('✅ Restricción agregada correctamente');
+          document.getElementById('formRestriccion').reset();
+        } else {
+          alert('❌ Error: ' + data.error);
+        }
+      } catch (err) {
+        alert('❌ Error en la solicitud: ' + err.message);
+      }
+    });
+  </script>
+</body>
+</html>
